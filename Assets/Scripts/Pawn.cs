@@ -7,6 +7,7 @@ public abstract class Pawn : MonoBehaviour
     [SerializeField] protected float turnSpeed;
     [SerializeField] protected float moveSpeed;
     protected Mover mover;
+    public Vector3 cameraOffset;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -21,6 +22,7 @@ public abstract class Pawn : MonoBehaviour
         
     }
 
+    //abstract function declarations
     public abstract void MoveForward();
     public abstract void MoveBackward();
     public abstract void TurnRight();
