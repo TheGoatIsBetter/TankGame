@@ -18,7 +18,7 @@ public class KeyboardController : Controller
     protected override void Start()
     {
         //add itself to list of players
-        GameManager.gm.players.Add(this);
+        GameManager.instance.players.Add(this);
     }
 
     // Update is called once per frame
@@ -34,7 +34,7 @@ public class KeyboardController : Controller
     public void OnDestroy()
     {
         //remove itself from list of players
-        GameManager.gm.players.Remove(this);
+        GameManager.instance.players.Remove(this);
     }
 
     //simply checks for keycodes and runs functions from pawn or cameracontroller if down/pressed

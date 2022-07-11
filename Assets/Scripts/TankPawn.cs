@@ -78,4 +78,16 @@ public class TankPawn : Pawn
         }
 
     }
+
+    public override void TurnTowards(Vector3 targetPos)
+    {
+        //find vector to target pos from pos
+        Vector3 vectorToTargetPos = targetPos - transform.position;
+        //find quaternion needed to look down vector
+        Quaternion lookRot = Quaternion.LookRotation(vectorToTargetPos, transform.up);
+        //change rotation to be slightly down quaternion
+        transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                                                      lookRot,
+                                                      turnSpeed * Time.deltaTime);
+    }
 }

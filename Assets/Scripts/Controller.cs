@@ -10,16 +10,12 @@ public abstract class Controller : MonoBehaviour
     public CameraController cam;
 
     // Start is called before the first frame update
-    protected virtual void Start()
-    {
-     
-    }
+    protected abstract void Start();
 
     // Update is called once per frame
-    protected virtual void Update()
-    {
-        
-    }
+    protected abstract void Update();
 
-    protected abstract void ProcessInputs();
+    protected virtual void ProcessInputs() { }
+
+    public virtual void MakeDecisions() { }
 }

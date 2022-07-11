@@ -17,10 +17,10 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
         //if there exists a player
-        if(GameManager.gm.players[playerNumber].pawn != null )
+        if(GameManager.instance.players[playerNumber].pawn != null )
         {
             //set it to a simple variable for brevity's sake
-            pawn = GameManager.gm.players[playerNumber].pawn;
+            pawn = GameManager.instance.players[playerNumber].pawn;
         }
     }
 

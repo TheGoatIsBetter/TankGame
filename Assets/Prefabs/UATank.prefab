@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 7361647817549458130}
   - component: {fileID: 7361647817549458129}
   - component: {fileID: -3972298856886287604}
+  - component: {fileID: 3963674074389526872}
   m_Layer: 0
   m_Name: UATank
   m_TagString: Untagged
@@ -61,7 +62,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7703612214654994662}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.069771245, y: 0.99599653, z: -0.0385289, w: 0.040477637}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -167,7 +168,6 @@ MonoBehaviour:
   damageDone: 5
   shootForce: 500
   shootPoint: {fileID: 1428750695}
-  timeBetweenShots: 0.17
 --- !u!114 &7361647817549458130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   secondsBeforeDespawn: 5
+  timeBetweenShots: 0
 --- !u!114 &-3972298856886287604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,3 +208,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 0
+--- !u!114 &3963674074389526872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7703612214654994662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69179b697382e3f4eb5c3d5162aee594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseDistance: 5
