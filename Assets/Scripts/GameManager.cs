@@ -26,17 +26,18 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-
-        //testing feature, simply start player at 0,0
-        SpawnPlayer(0, Vector3.zero);
-
-        SpawnAI(0, Vector3.zero + new Vector3(0, 0, 10));
     }
 
     // Update is called once per frame
-    //void Update()
-    //{
-    //}
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            SpawnPlayer(0, Vector3.zero);
+        }
+
+        
+    }
 
     public void SpawnPlayer(int playerNumber, Vector3 location)
     {
@@ -67,4 +68,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    
 }

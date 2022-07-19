@@ -162,6 +162,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnSpeed: 175
   moveSpeed: 5
+  baseMoveSpeed: 0
+  maxMoveSpeed: 8
   cameraOffset: {x: 0, y: 20, z: 0}
   bulletPrefab: {fileID: 4936812860631438608, guid: b638485a34115df48a3f42c8d7819080,
     type: 3}
@@ -193,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   secondsBeforeDespawn: 5
-  timeBetweenShots: 0
+  timeBetweenShots: 0.5
 --- !u!114 &-3972298856886287604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,4 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69179b697382e3f4eb5c3d5162aee594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  passiveNoiseDistance: 5
   noiseDistance: 5
+  noiseDepreciationRate: 50
+  noiseDepreciation: 0

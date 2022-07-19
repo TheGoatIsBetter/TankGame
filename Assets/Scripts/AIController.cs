@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class AIController : Controller
 {
-    public enum AIStates { Idle, Chase, Attack, Flee, ChooseTarget, Patrol};
+    public enum AIStates { Idle, Chase, Attack, Flee, ChooseTarget, Patrol, CoverFire, Sentry};
     [SerializeField] protected AIStates currentState;
     protected float timeEnteredCurrentState;
     [SerializeField] protected GameObject AITarget;
@@ -12,6 +12,7 @@ public abstract class AIController : Controller
     protected int currentWaypoint;
     [SerializeField] protected float hearingRadius;
     [SerializeField] protected float fieldOfView;
+    [SerializeField] protected float shootFieldOfView;
     [SerializeField] protected float viewDistance;
 
     protected override void Start()
@@ -35,8 +36,8 @@ public abstract class AIController : Controller
 
     public virtual void DoChaseState()
     {
-        //TODO: Add max speed to pawns and set this AI's to max
-
+        //set movespeed to max
+        pawn.moveSpeed = pawn.maxMoveSpeed;
 
         //chase the player
         Chase(AITarget);
@@ -44,18 +45,27 @@ public abstract class AIController : Controller
 
     public virtual void DoChooseTargetState()
     {
-        AITarget = GameManager.instance.players[0].pawn.gameObject;
+        AITarget = GetNearestPlayer();
     }
 
     public virtual void DoAttackState()
     {
+        pawn.moveSpeed = pawn.baseMoveSpeed;
         //Chase the player
+        Chase(AITarget);
 
         //shoot at them
+        if (CanSee(AITarget, shootFieldOfView))
+        {
+            pawn.Shoot();
+        }
+        
     }
 
     public virtual void DoPatrolState()
     {
+        pawn.moveSpeed = pawn.baseMoveSpeed;
+
         //create temp target loc
         Vector3 seekPos = waypoints[currentWaypoint].position;
 
@@ -77,6 +87,60 @@ public abstract class AIController : Controller
         {
             currentWaypoint = 0;
         }
+    }
+
+    public virtual void DoFleeState()
+    {
+        Flee(AITarget.transform.position, false);
+    }
+
+    public virtual void DoCoverFireState()
+    {
+        Flee(AITarget.transform.position, true);
+        pawn.Shoot();
+    }
+
+    public virtual void DoSentryState()
+    {
+        pawn.TurnTowards(AITarget.transform.position);
+        pawn.Shoot();
+    }
+
+
+    public virtual void Flee(Vector3 fleeTarget, bool backwards)
+    {
+        //get distance
+        float dist = Vector3.Distance(fleeTarget, pawn.transform.position);
+        //set speed based off distance
+        float maxFleeDist = 10.0f;
+        float fleeDistPercent = dist / maxFleeDist;
+        float fleeSpeed = (1 - fleeDistPercent) * maxFleeDist;
+
+        if (fleeSpeed > pawn.maxMoveSpeed) fleeSpeed = pawn.maxMoveSpeed;
+
+        pawn.moveSpeed = fleeSpeed;
+
+        if (backwards)
+        {
+            pawn.TurnTowards(fleeTarget);
+            pawn.MoveBackward();
+        }
+        else
+        {
+            //turn away from player
+            Vector3 distance = fleeTarget - pawn.transform.position;
+            Vector3 endPoint = pawn.transform.position - new Vector3(distance.x, pawn.transform.position.y, distance.z);
+            pawn.TurnTowards(endPoint);
+
+            //move forward
+            pawn.MoveForward();
+        }
+
+
+
+
+        
+
     }
 
     public virtual void Chase(Vector3 chaseTarget)
@@ -110,12 +174,12 @@ public abstract class AIController : Controller
         return false;
     }
 
-    public virtual bool CanSee( GameObject target)
+    public virtual bool CanSee( GameObject target, float FoV)
     {
         //check if in FoV
         Vector3 vectorToTarget = target.transform.position - pawn.transform.position;
         float angleToTarget = Vector3.Angle(pawn.transform.forward, vectorToTarget);
-        if(angleToTarget > fieldOfView)
+        if(angleToTarget > FoV)
         {
             return false;
         }
@@ -189,7 +253,28 @@ public abstract class AIController : Controller
             }
         }
 
+        Debug.Log(nearestPlayer);
         //every player checked, nearest found
         return nearestPlayer;
+    }
+
+    //returns whether nearest AI to nearest player or not
+    public virtual bool IsNearestAI()
+    {
+        //nearest player
+        GameObject nearestPlayer = GetNearestPlayer();
+
+        //check other ais to see if closer
+        for (int i = 1; i < GameManager.instance.ais.Count; i++)
+        {
+            float tempDistance = Vector3.Distance(nearestPlayer.transform.position,
+                                  GameManager.instance.ais[i].pawn.transform.position);
+            if (tempDistance < Vector3.Distance(pawn.transform.position, nearestPlayer.transform.position))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -9,6 +9,7 @@ public class TankPawn : Pawn
     [SerializeField] private float damageDone;
     [SerializeField] private float shootForce;
     [SerializeField] private Transform shootPoint;
+    private NoiseMaker noise;
 
     private float countdown;
     
@@ -21,6 +22,7 @@ public class TankPawn : Pawn
 
         //get shooter component of tankpawn
         shooter = GetComponent<Shooter>();
+        noise = GetComponent<NoiseMaker>();
 
         //set countdown to time between shots
         countdown = shooter.timeBetweenShots;
@@ -35,6 +37,8 @@ public class TankPawn : Pawn
 
     public override void MoveForward()
     {
+        noise.updateNoise(7);
+
         //use the mover to move forward if not null
         if (mover != null)
         {
@@ -44,6 +48,8 @@ public class TankPawn : Pawn
     }
     public override void MoveBackward()
     {
+        noise.updateNoise(7);
+
         //move backward
         if (mover != null)
         {
@@ -68,6 +74,8 @@ public class TankPawn : Pawn
     }
     public override void Shoot()
     {
+        noise.updateNoise(10);
+
         //check for countdown over or not (and make sure shooter exists yet)
         if(countdown <= 0 && shooter != null)
         {

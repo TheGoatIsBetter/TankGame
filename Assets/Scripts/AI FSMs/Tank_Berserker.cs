@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIController_Simple : AIController
+public class Tank_Berserker : AIController
 {
     // Start is called before the first frame update
     protected override void Start()
@@ -24,6 +24,8 @@ public class AIController_Simple : AIController
 
     public override void MakeDecisions()
     {
+        if (pawn == null) return; //prevent null reference errors
+
         //FSM
         //based on current state
         switch (currentState)
@@ -32,30 +34,24 @@ public class AIController_Simple : AIController
                 //do state
                 DoIdleState();
                 //check for change state
-                if (IsTimePassed(3))
+                if (IsTimePassed(2))
                 {
-                    ChangeState(AIStates.Patrol);
-                }
-                break;
-            case AIStates.Patrol:
-                DoPatrolState();
-                //check conditions
-                //stay here forever
-                break;
-            case AIStates.Chase:
-                //do state
-                DoChaseState();
-                //check for change state
-                if (IsTimePassed(1))
-                {
-                    ChangeState(AIStates.Idle);
+                    ChangeState(AIStates.ChooseTarget);
                 }
                 break;
             case AIStates.ChooseTarget:
                 DoChooseTargetState();
-                //always change, no conditions
-                ChangeState(AIStates.Chase);
+
+                ChangeState(AIStates.Attack);
                 break;
+            case AIStates.Attack:
+                DoAttackState();
+                if (IsTimePassed(5))
+                {
+                    ChangeState(AIStates.ChooseTarget);
+                }
+                break;
+
         }
     }
 

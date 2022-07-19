@@ -4,8 +4,10 @@ using UnityEngine;
 
 public abstract class Pawn : MonoBehaviour
 {
-    [SerializeField] protected float turnSpeed;
-    [SerializeField] protected float moveSpeed;
+    [SerializeField] public float turnSpeed;
+    [SerializeField] public float moveSpeed;
+    [SerializeField] public float baseMoveSpeed;
+    [SerializeField] public float maxMoveSpeed;
     protected Mover mover;
     public Vector3 cameraOffset;
 
