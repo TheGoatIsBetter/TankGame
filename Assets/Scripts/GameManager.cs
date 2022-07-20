@@ -11,10 +11,10 @@ public class GameManager : MonoBehaviour
     public List<AIController> ais;
     public GameObject pawnPrefab;
 
-    // Start is called before the first frame update
-    void Start()
+    //Awake is called before Start
+    private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             //this is THE game manager
             instance = this;
@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     // Update is called once per frame
