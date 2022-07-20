@@ -12,8 +12,8 @@ public class Tank_Patroller : AIController
         //start idle
         ChangeState(AIStates.Idle);
 
-        //target start w/player one
-        AITarget = GameManager.instance.players[0].pawn.gameObject;
+        //target start w/dummy
+        AITarget = dummyTarget;
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class Tank_Patroller : AIController
             case AIStates.Idle:
                 DoIdleState();
                 //check for change state
-                if (IsTimePassed(2))
+                if (IsTimePassed(1))
                 {
                     ChangeState(AIStates.ChooseTarget);
                 }

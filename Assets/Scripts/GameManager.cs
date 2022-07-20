@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
             SpawnPlayer(0, Vector3.zero);
         }
 
-        
+
     }
 
     public void SpawnPlayer(int playerNumber, Vector3 location)
@@ -53,21 +53,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    public void SpawnAI(int aiNumber, Vector3 location)
-    {
-        //instantiate the player in the world at zero, with quaternion and as a pawn.
-        GameObject newPawn = Instantiate(pawnPrefab, location, Quaternion.identity);
-        Pawn newPawnScript = newPawn.GetComponent<Pawn>();
-        if (newPawnScript != null)
-        {
-            //make sure ai count stays correct
-            if (ais.Count > aiNumber)
-            {
-                ais[aiNumber].pawn = newPawnScript;
-            }
-        }
-    }
-
-    
 }

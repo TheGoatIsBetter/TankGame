@@ -12,8 +12,8 @@ public class Tank_SentryChaser : AIController
         //start idle
         ChangeState(AIStates.Idle);
 
-        //target start w/player one
-        AITarget = GameManager.instance.players[0].pawn.gameObject;
+        //target start w/dummy
+        AITarget = dummyTarget;
     }
 
     // Update is called once per frame
@@ -59,7 +59,7 @@ public class Tank_SentryChaser : AIController
                 break;
             case AIStates.Attack:
                 DoAttackState();
-                if (CanHear(AITarget) || IsTimePassed(5))
+                if (IsTimePassed(5))
                 {
                     ChangeState(AIStates.Sentry);
                 }

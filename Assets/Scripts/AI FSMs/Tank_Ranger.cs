@@ -12,8 +12,8 @@ public class Tank_Ranger : AIController
         //start idle
         ChangeState(AIStates.Idle);
 
-        //target start w/player one
-        AITarget = GameManager.instance.players[0].pawn.gameObject;
+        //target start w/dummy
+        AITarget = dummyTarget;
     }
 
     // Update is called once per frame

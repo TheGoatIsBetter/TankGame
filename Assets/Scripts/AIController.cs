@@ -14,6 +14,8 @@ public abstract class AIController : Controller
     [SerializeField] protected float fieldOfView;
     [SerializeField] protected float shootFieldOfView;
     [SerializeField] protected float viewDistance;
+    [SerializeField] protected GameObject dummyTarget;
+
 
     protected override void Start()
     {
@@ -176,6 +178,8 @@ public abstract class AIController : Controller
 
     public virtual bool CanSee( GameObject target, float FoV)
     {
+        if (target == null) return false; //prevent missingreference
+
         //check if in FoV
         Vector3 vectorToTarget = target.transform.position - pawn.transform.position;
         float angleToTarget = Vector3.Angle(pawn.transform.forward, vectorToTarget);
@@ -205,6 +209,8 @@ public abstract class AIController : Controller
     //can the AI hear a target
     public virtual bool CanHear( GameObject target)
     {
+        if (target == null) return false; //prevent nullreference
+
         //get noisemaker component
         NoiseMaker targetNoiseMaker = target.GetComponent<NoiseMaker>();
         //if it does not exist
@@ -236,6 +242,8 @@ public abstract class AIController : Controller
 
     public virtual GameObject GetNearestPlayer()
     {
+        if (GameManager.instance.players[0].pawn == null) return null;
+
         //assume player 0 is closest
         GameObject nearestPlayer = GameManager.instance.players[0].pawn.gameObject;
         float nearestPlayerDistance = Vector3.Distance(pawn.transform.position,
